@@ -52,15 +52,13 @@ JOIN
     order_Items oi ON o.order_id = oi.order_id
 JOIN 
     products p ON oi.product_id = p.product_id
-JOIN 
-    categories c ON p.category_id = c.category_id
 GROUP BY 
     u.user_id,
     u.username
 -- Filter to include only those users who have ordered in every category	
 HAVING 
     -- Count the distinct categories each user has ordered in
-    COUNT(DISTINCT c.category_id) = (
+    COUNT(DISTINCT p.category_id) = (
 	-- The subquery gets the total number of distinct categories
 	SELECT COUNT(DISTINCT category_id) FROM categories
 	);
